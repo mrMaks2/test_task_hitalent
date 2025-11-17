@@ -28,7 +28,8 @@ API-сервис для вопросов и ответов, построенны
 3.  **Создайте файл .env на основе примера.**
 
     ```bash
-    cp .env.example .env
+    cp .env.example .env - Linux/MacOS
+    copy .env.example .env - Windows
     ```
     
 4.  **Запустите проект с помощью команды:**
