@@ -36,8 +36,6 @@ REST API для управления чатами и сообщениями.
 
 ## Запуск проекта
 
-### С использованием Docker (рекомендуется)
-
 1.  **Убедитесь, что у вас установлен Docker и Docker Compose.**
 
 2.  **Склонируйте репозиторий:**
@@ -71,57 +69,7 @@ REST API для управления чатами и сообщениями.
     docker-compose exec web python manage.py createsuperuser
     ```
 
-### Без Docker
-
-1.  **Склонируйте репозиторий.**
-
-    ```bash
-    git clone https://github.com/mrMaks2/test_task_hitalent.git
-    cd test_task_hitalent
-    ```
-
-2.  **Установите виртуальное окружение и активируйте его.**
-
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
-    ```
-
-3.  **Создайте файл .env по примеру .env.example в корне проекта с данными для settings и PostgerSQL.**
-
-    ```bash
-    cp .env.example .env
-    ```
-
-4.  **Установите зависимости.**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-5.  **Настройте базу данных PostgreSQL.**
-
-6.  **Примените миграции.**
-
-    ```bash
-    python manage.py migrate
-    ```
-
-7.  **Создание суперпользователя:**
-
-    ```bash
-    python manage.py createsuperuser
-    ```
-
-8.  **Запустите сервер.**
-
-    ```bash
-    python manage.py runserver
-    ```
-
-## Тестирование
-
-### Без Docker
+7.  **Тестирование:**
 
     ```bash
     docker-compose exec web pytest

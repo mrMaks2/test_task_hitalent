@@ -77,31 +77,16 @@ WSGI_APPLICATION = 'chat_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import sys
-
-# Определяем, работаем ли в тестовом режиме
-TESTING = 'test' in sys.argv or 'pytest' in sys.argv[0] or os.environ.get('DJANGO_TEST') == 'true'
-
-if TESTING:
-    # Используем SQLite для тестов
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'test_db.sqlite3',  # Явное имя файла
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'chat_db'),
+        'USER': os.getenv('DB_USER', 'chat_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'chat_password'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': int(os.getenv('DB_PORT', 5432)),
     }
-else:
-    # Используем PostgreSQL для продакшена/разработки
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'chat_db'),  # Добавлено значение по умолчанию
-            'USER': os.getenv('DB_USER', 'chat_user'),
-            'PASSWORD': os.getenv('DB_PASSWORD', 'chat_password'),
-            'HOST': os.getenv('DB_HOST', 'db'),
-            'PORT': int(os.getenv('DB_PORT', 5432)),
-        }
-    }
+}
 
 
 

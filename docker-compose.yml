@@ -21,8 +21,6 @@ services:
       - .:/app
     environment:
       - DJANGO_SETTINGS_MODULE=chat_project.settings
-    links:
-      - redis:redis
     networks:
       - app-network
     healthcheck:
