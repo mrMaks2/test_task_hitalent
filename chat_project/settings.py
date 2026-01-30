@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -85,6 +86,9 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD', 'chat_password'),
         'HOST': os.getenv('DB_HOST', 'db'),
         'PORT': int(os.getenv('DB_PORT', 5432)),
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        }
     }
 }
 

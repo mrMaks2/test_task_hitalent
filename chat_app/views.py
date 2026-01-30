@@ -1,8 +1,8 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from django.db import transaction
-from django.db.models import Prefetch
+from django.db import models, transaction
+from django.db.models import Prefetch, OuterRef
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, ChatDetailSerializer
 import logging
@@ -56,19 +56,20 @@ class ChatDetailView(generics.RetrieveDestroyAPIView):
         queryset = super().get_queryset()
         
         if self.request.method == 'GET':
-            # Для GET-запросов используем выборку сообщений.
-            limit = min(int(self.request.query_params.get('limit', 20)), 100)
-            queryset = queryset.prefetch_related(
-                models.Prefetch(
-                    'messages',
-                    queryset=Message.objects.all().order_by('-created_at')[:limit]
-                )
-            )
+            queryset = queryset.prefetch_related('messages')
         return queryset
     
     def retrieve(self, request, *args, **kwargs):
         logger.info(f"Получение чата {kwargs['pk']}")
-        return super().retrieve(request, *args, **kwargs)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        limit = min(int(request.query_params.get('limit', 20)), 100)
+        data = serializer.data
+        if 'messages' in data:
+            data['messages'] = data['messages'][:limit]
+        
+        return Response(data)
     
     @transaction.atomic
     def destroy(self, request, *args, **kwargs):
